@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MHABlog</title>
+</head>
+<body>
+    <form action="/api/posts" method="POST">
+        <p>Crie um novo post</p>
+        <input type="text" placeholder="Um titulo..." name="title" required>
+        <input type="text" placeholder="O corpo do texto..." name="body" required>
+        <button type="submit">Criar post</button>
+    </form>
+    <div id="posts"></div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", async () => {
+            const postsDiv = document.getElementById("posts");
+            
+            try {
+                const response = await fetch("/api/posts", { method: "GET" });
+                const posts = await response.json();
+
+                for (const post of posts) {
+                    const postElement = document.createElement("p");
+                    // textContent em vez de .text
+                    postElement.textContent = `${post.title} — ${post.body}`;
+                    postsDiv.appendChild(postElement);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar posts:", error);
+            }
+        });
+    </script>
+</body>
+</html>
