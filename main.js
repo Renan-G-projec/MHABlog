@@ -1,6 +1,7 @@
 // Ad Maiorem Dei Gloriam!
 import { DatabaseSync } from "node:sqlite";
 import express from "express";
+import postRoute from "./src/routes/postRoute.js";
 
 const connection = new DatabaseSync(":memory:");
 
@@ -44,21 +45,7 @@ app.use(express.json());
 app.use(express.static("./public"));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/api/posts", (req, res) => {
-    const posts = mockPosts;
-
-    res.send(posts);
-})
-
-app.post("/api/posts", (req, res) => {
-    const {title, body} = req.body;
-    if (!title || !body) {
-        return res.status(400).send({success: false, message: "Bad request. Missing body or title."});
-    }
-
-    mockPosts.push({title, body})
-    res.status(200).send({success: true, message: "Successifully created post."});
-})
+app.use("/api/posts/", postRoute)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
