@@ -1,11 +1,10 @@
 // Ad Maiorem Dei Gloriam!
 import { DatabaseSync } from "node:sqlite"
 
-const connection = new DatabaseSync(":memory:");
+const connection = new DatabaseSync("main.db");
 
 function getInitialQuery() {
     return `
-        PRAGMA foreign_keys = ON;
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
             username TEXT NOT NULL UNIQUE,
@@ -31,6 +30,8 @@ function getInitialQuery() {
         ); 
     `
 }
+connection.exec("PRAGMA foreign_keys = ON;")
 connection.exec(getInitialQuery());
 
+export { getInitialQuery };
 export default connection;
