@@ -1,0 +1,40 @@
+<!-- Ad Maiorem Dei Gloriam! -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MHABlog</title>
+</head>
+<body>
+    <h1>Bem vindo ao MHABlog!</h1>
+    <form action="/posts" method="POST" id="post">
+        <input type="text" name="title">
+        <input type="text" name="body">
+        <button type="submit">Create Post</button>
+    </form>
+    <% posts.forEach((post) => {%>
+        <h3><%= post.title %></h3>
+    <%});%>
+
+    <script>
+        const postForm = document.getElementById("post");
+        postForm.addEventListener("submit", async (ev) => {
+            ev.preventDefault();
+            
+            const formData = new FormData(postForm);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch('/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

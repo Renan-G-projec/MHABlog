@@ -30,7 +30,7 @@ function getInitialQuery() {
         ); 
     `
 }
-connection.exec("PRAGMA foreign_keys = ON;")
+connection.exec("PRAGMA foreign_keys = OFF;")
 connection.exec(getInitialQuery());
 
 export { getInitialQuery };

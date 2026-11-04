@@ -1,6 +1,6 @@
-// Ad Maiorem Dei Gloriam!a
+// Ad Maiorem Dei Gloriam!
 import { getPostsFeed, createPost } from "../controllers/postController.js";
-import { json, Router } from "express";
+import { Router } from "express";
 
 const router = Router();
 
