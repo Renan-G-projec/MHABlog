@@ -13,26 +13,36 @@
         <input type="text" name="body">
         <button type="submit">Create Post</button>
     </form>
-    <% posts.forEach((post) => {%>
-        <h3><%= post.title %></h3>
-    <%});%>
+    <div id="posts">
+        <% posts.forEach((post) => {%>
+            <h3><%= post.title %></h3>
+        <%});%>
+    </div>
 
     <script>
         const postForm = document.getElementById("post");
+        const posts = document.getElementById("posts");
+
         postForm.addEventListener("submit", async (ev) => {
             ev.preventDefault();
             
             const formData = new FormData(postForm);
             const data = Object.fromEntries(formData.entries());
 
+            const post = document.createElement("h3");
+            post.innerText = data.title;
+            post.style.color = "grey";
+
+            posts.insertBefore(post, posts.firstChild)
+
             const response = await fetch('/posts', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-
+            
             if (response.ok) {
-                window.location.href = '/';
+                post.style.color = "black";
             }
         });
     </script>

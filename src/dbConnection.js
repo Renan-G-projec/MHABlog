@@ -11,7 +11,7 @@ function getInitialQuery() {
             email TEXT,
             password_hash TEXT,
             role TEXT NOT NULL DEFAULT 'USER'
-        );   
+        );
 
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY,
